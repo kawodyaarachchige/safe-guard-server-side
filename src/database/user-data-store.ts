@@ -76,4 +76,19 @@ export const addUserLocation = async (id: string, locationId: string | any) => {
         throw error instanceof Error ? error : new Error('Failed to add user location');
     }
 }
+export const addUserCycle = async (id: string, cycleId: string | any) => {
+    try {
+        const user = await IUser.findByIdAndUpdate(id,
+            {
+                $push: {cycles: cycleId}
+            },
+            {new: true}
+        );
+        if(!user){
+            throw new Error('User not found');
+        }
+    } catch (error) {
+        throw error instanceof Error ? error : new Error('Failed to add user cycle');
+    }
+}
 
