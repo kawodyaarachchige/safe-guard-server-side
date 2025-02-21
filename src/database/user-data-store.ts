@@ -6,7 +6,7 @@ export const registerUser = async (user: User) => {
         const fetchedUser = await IUser.findOne({email: user.email});
 
         if (!fetchedUser) {
-            const newUser = new User(user.email, user.name, user.password, user.incidents,user.contacts||[]);
+            const newUser = new User(user.email, user.name, user.password, user.incidents,user.contacts||[],user.location||null);
             await IUser.create(newUser);
             return newUser;
 
@@ -59,6 +59,21 @@ export const addUserContact = async (id: string, contactId: string | any) => {
         }
     } catch (error) {
         throw error instanceof Error ? error : new Error('Failed to add user contact');
+    }
+}
+export const addUserLocation = async (id: string, locationId: string | any) => {
+    try {
+        const user = await IUser.findByIdAndUpdate(id,
+            {
+                $push: {location: locationId}
+            },
+            {new: true}
+        );
+        if(!user){
+            throw new Error('User not found');
+        }
+    } catch (error) {
+        throw error instanceof Error ? error : new Error('Failed to add user location');
     }
 }
 
