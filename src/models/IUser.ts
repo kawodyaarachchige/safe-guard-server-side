@@ -5,6 +5,7 @@ export interface IUser extends Document {
     name : string,
     password : string,
     incidents : mongoose.Schema.Types.ObjectId[];
+    contacts : mongoose.Schema.Types.ObjectId[]
 }
 
 let UserSchema = new Schema({
@@ -23,6 +24,10 @@ let UserSchema = new Schema({
     incidents : [{
         type : mongoose.Schema.Types.ObjectId,
         ref : "Incident"
+    }],
+    contacts : [{
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Contact"
     }]
 });
 

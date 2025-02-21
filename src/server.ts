@@ -3,6 +3,8 @@ import dotenv from "dotenv"
 import cors from 'cors';
 import mongoose from "mongoose";
 import userRouter from "./routes/user-routes";
+import incidentRouter from "./routes/incident-routes";
+import contactRouter from "./routes/contact-routes";
 
 const app = express();
 const port = 5002;
@@ -22,6 +24,8 @@ mongoose
 
 
 app.use("/api/user",userRouter);
+app.use("/api/incident",incidentRouter);
+app.use("/api/contact",contactRouter)
 
 
 /*

@@ -18,7 +18,13 @@ userRouter.post("/login", async (req, res) => {
     try {
         let user = req.body;
         let response = await loginUser(user);
-        res.status(200).send(response);
+        const filteredResponse = {
+            id: response._id,
+            email: response.email,
+            name: response.name
+        };
+
+        res.status(200).send(filteredResponse);
     } catch (e) {
         console.log("error : ", e);
     }
