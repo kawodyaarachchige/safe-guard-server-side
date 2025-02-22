@@ -17,3 +17,12 @@ export const saveIncident = async (incidentData: Incident) => {
         throw error instanceof Error ? error : new Error("Failed to save incident.");
     }
 };
+export const getIncidents = async (userId: string) => {
+    try {
+        const incidents = await IIncident.find({user: userId});
+        return incidents
+    } catch (error) {
+        console.log(`Error getting incidents: ${error}`);
+        throw error instanceof Error ? error : new Error("Failed to get incidents.");
+    }
+};

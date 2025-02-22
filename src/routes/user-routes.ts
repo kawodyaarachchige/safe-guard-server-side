@@ -9,7 +9,7 @@ userRouter.post("/register", async (req, res) => {
     try{
         let user = req.body;
         let response = await registerUser(user);
-        res.send("User registered successfully");
+        res.status(200).json({ message: "User registered successfully" });
     }catch (e) {
         console.log("error : ", e);
     }
