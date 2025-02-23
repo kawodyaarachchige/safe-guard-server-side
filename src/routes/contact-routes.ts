@@ -1,6 +1,13 @@
 import express, { Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
-import { saveContact, updateContact, deleteContact, getContacts } from "../database/contact-data-store";
+import {
+    saveContact,
+    updateContact,
+    deleteContact,
+    getContacts,
+    getAllContacts, getContactNumbers,
+
+} from "../database/contact-data-store";
 import IContact from "../models/IContact";
 
 const contactRouter = express.Router();
@@ -32,7 +39,7 @@ contactRouter.post("/save", async (req: Request, res: Response, next: NextFuncti
 // Get all contacts
 contactRouter.get("/all", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const contacts = await IContact.find({});
+        const contacts = await getAllContacts();
         res.status(200).json(contacts);
     } catch (e) {
         next(e);
@@ -72,11 +79,20 @@ contactRouter.delete("/delete/:contactId", validateContactId, async (req: Reques
         next(e);
     }
 });
+contactRouter.get("/getContactNumbers", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const phoneNumbers = await getContactNumbers();
+        res.status(200).json(phoneNumbers);
+    } catch (e) {
+        next(e);
+    }
+});
 
 // Centralized error handler
 contactRouter.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     console.error("Error:", err);
     res.status(500).json({ message: "Something went wrong", error: err.message });
 });
+
 
 export default contactRouter;

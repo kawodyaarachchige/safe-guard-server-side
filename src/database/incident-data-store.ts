@@ -26,3 +26,42 @@ export const getIncidents = async (userId: string) => {
         throw error instanceof Error ? error : new Error("Failed to get incidents.");
     }
 };
+export const updateIncident = async (incidentId: string, incidentData: Partial<Incident>) => {
+    try {
+        const updatedIncident = await IIncident.findByIdAndUpdate(
+            incidentId,
+            incidentData,
+            { new: true }
+        );
+
+        if (!updatedIncident) {
+            throw new Error("Incident not found.");
+        }
+
+        return updatedIncident;
+    } catch (error) {
+        console.log(`Error updating incident: ${error}`);
+        throw error instanceof Error ? error : new Error("Failed to update incident.");
+    }
+};
+export const getAllIncidents = async () => {
+    try {
+        const incidents = await IIncident.find({});
+        return incidents
+    } catch (error) {
+        console.log(`Error getting incidents: ${error}`);
+        throw error instanceof Error ? error : new Error("Failed to get incidents.");
+    }
+};
+export const deleteIncident = async (incidentId: string) => {
+    try {
+        const deletedIncident = await IIncident.findByIdAndDelete(incidentId);
+
+        if (!deletedIncident) {
+            throw new Error("Incident not found.");
+        }return deletedIncident;
+    } catch (error) {
+        console.log(`Error deleting incident: ${error}`);
+        throw error instanceof Error ? error : new Error("Failed to delete incident.");
+    }
+};

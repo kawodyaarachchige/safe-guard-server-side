@@ -14,6 +14,15 @@ export const saveContact = async (contactData: Contact) => {
         throw error instanceof Error ? error : new Error("Failed to save contact.");
     }
 }
+export const getAllContacts = async () => {
+    try {
+        const contacts = await IContact.find();
+        return contacts
+    } catch (error) {
+        console.log(`Error getting contacts: ${error}`);
+        throw error instanceof Error ? error : new Error("Failed to get contacts.");
+    }
+};
 export const getContacts = async (userId: string) => {
     try {
         const contacts = await IContact.find({user: userId});
@@ -22,7 +31,7 @@ export const getContacts = async (userId: string) => {
         console.log(`Error getting contacts: ${error}`);
         throw error instanceof Error ? error : new Error("Failed to get contacts.");
     }
-};
+}
 export const updateContact = async (contactId: string, contactData: Partial<Contact>) => {
     try {
         const updatedContact = await IContact.findByIdAndUpdate(
@@ -56,3 +65,21 @@ export const deleteContact = async (contactId: string) => {
         throw error instanceof Error ? error : new Error("Failed to delete contact.");
     }
 };
+export const getContactNumbers = async () => {
+    try {
+        const contacts = await IContact.find({}, "name phone"); // Only fetch 'name' and 'phone' fields
+
+        if (!contacts || contacts.length === 0) {
+            throw new Error("No contacts found.");
+        }
+
+        return contacts.map(contact => ({
+            name: contact.name,
+            phone: contact.phone
+        }));
+    } catch (error) {
+        console.error(`Error getting contacts: ${error}`);
+        throw error instanceof Error ? error : new Error("Failed to get contacts.");
+    }
+};
+
