@@ -1,18 +1,8 @@
-import mongoose, { Document, Schema,Types } from 'mongoose';
-
-export interface IContact {
-    _id?: Types.ObjectId;
-    name: string;
-    phone: string;
-    email: string;
-    relationship: string;
-    isEmergencyContact: boolean;
-    isFavorite: boolean;
-    user: string; // Reference to the user who owns this contact
-}
+import mongoose, { Document, Schema } from 'mongoose';
+import {IContact} from "./IContact";
 
 export interface IEmergency extends Document {
-    userId: string; // To associate emergencies with a specific user
+    userId: string;
     contacts: IContact[];
     lastLocation: {
         latitude: number;
@@ -31,7 +21,7 @@ const ContactSchema: Schema = new Schema({
     relationship: { type: String, required: true },
     isEmergencyContact: { type: Boolean, default: false },
     isFavorite: { type: Boolean, default: false },
-    user: { type: String, required: true }, // Reference to the user
+    user: { type: String, required: true },
 });
 
 const EmergencySchema: Schema = new Schema({
@@ -47,5 +37,4 @@ const EmergencySchema: Schema = new Schema({
     },
 });
 
-// Export the Mongoose model
 export const EmergencyModel = mongoose.model<IEmergency>('Emergency', EmergencySchema);

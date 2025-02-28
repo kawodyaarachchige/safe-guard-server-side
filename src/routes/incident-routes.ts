@@ -1,23 +1,21 @@
 import express, {NextFunction, Request, Response} from "express";
-import {deleteIncident, getAllIncidents, saveIncident, updateIncident} from "../database/incident-data-store";
-import IIncident from "../models/IIncident";
-import {updateContact} from "../database/contact-data-store";
-import mongoose from "mongoose";
+import {
+    deleteIncident,
+    getAllIncidents,
+    getIncidents,
+    saveIncident,
+    updateIncident
+} from "../database/incident-data-store";
+
 
 
 let incidentRouter = express.Router();
 
-const validateIncidentId = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    const incidentId = req.params.incidentId;
-    if (!incidentId || !mongoose.Types.ObjectId.isValid(incidentId)) {
-        return res.status(400).json({ message: "Incident ID is required" });
-    }
-    next();
-}
 
 incidentRouter.post("/save", async (req: Request, res: Response, next: NextFunction) => {
     try{
         const incident = req.body;
+        console.log(incident.user)
         const response = await saveIncident(incident);
 
         res.status(200).json({ message: "Incident saved successfully" });
@@ -54,5 +52,16 @@ incidentRouter.delete("/delete/:incidentId", async (req, res) => {
         console.log("error : ", e);
     }
 })
+incidentRouter.get("/incidents/:userId", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const userId = req.params.userId;
+        const contacts = await getIncidents(userId);
+        console.log(`Incidents for user ${userId}: ${JSON.stringify(contacts)}`);
+        res.status(200).json(contacts);
+    } catch (e) {
+        next(e);
+    }
+});
+
 
 export default incidentRouter;

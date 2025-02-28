@@ -4,8 +4,8 @@ export interface IUser extends Document {
     email : string,
     name : string,
     password : string,
-    incidents : mongoose.Schema.Types.ObjectId[];
-    contacts : mongoose.Schema.Types.ObjectId[]
+    incidents : string[],
+    contacts : string[]
 }
 
 let UserSchema = new Schema({

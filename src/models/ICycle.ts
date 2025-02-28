@@ -1,30 +1,58 @@
-import mongoose,{Schema,Document} from "mongoose";
-
-
-export enum FlowStatus {
-    Light = "LIGHT",
-    Medium = "MEDIUM",
-    Heavy = "HEAVY",
-}
+import mongoose, { Schema, Document } from "mongoose";
 
 export interface ICycle extends Document {
-    startDate: Date;
-    endDate: Date;
-    symptoms: string[];
-    notes: string;
-    flow: FlowStatus;
-    user: mongoose.Schema.Types.ObjectId
+    user: mongoose.Schema.Types.ObjectId;
+    startDate: string;
+    endDate: string;
+    cycleLength: number;
+    periodLength: number;
+    symptoms: {
+        date: string;
+        flow: 'light' | 'medium' | 'heavy';
+        symptoms: string[];
+        notes: string;
+    }[];
 }
-let  CycleSchema = new Schema<ICycle>({
-    startDate: { type: Date, required: true },
-    endDate: { type: Date, required: true },
-    symptoms: { type: [String], required: true },
-    notes: { type: String, required: false },
-    flow: {
-        type: String,
-        enum: Object.values(FlowStatus), // Ensure enum values are recognized
+
+const cycleSchema = new Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
+        ref: 'User'
     },
-    user: { type: String, required: true },
+    startDate: {
+        type: String,
+        required: true
+    },
+    endDate: {
+        type: String,
+        required: true
+    },
+    cycleLength: {
+        type: Number,
+        required: true
+    },
+    periodLength: {
+        type: Number,
+        required: true
+    },
+    symptoms: [{
+        date: {
+            type: String,
+            required: true
+        },
+        flow: {
+            type: String,
+            enum: ['light', 'medium', 'heavy'],
+            required: true
+        },
+        symptoms: [{
+            type: String
+        }],
+        notes: {
+            type: String
+        }
+    }]
 });
-export default mongoose.model<ICycle>('Cycle', CycleSchema);
+
+export default mongoose.model<ICycle>('Cycle', cycleSchema);

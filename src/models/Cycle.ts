@@ -1,30 +1,36 @@
-export enum FlowStatus {
-    Light = "LIGHT",
-    Medium = "MEDIUM",
-    Heavy = "HEAVY",
-}
-
 export class Cycle {
-    startDate: Date;
-    endDate: Date;
-    symptoms: string[];
-    notes: string;
-    flow: FlowStatus;
+    startDate: string;
+    endDate: string;
+    cycleLength: number;
+    periodLength: number;
+    symptoms: {
+        date: string;
+        flow: 'light' | 'medium' | 'heavy';
+        symptoms: string[];
+        notes: string;
+    }[];
     user: string;
 
     constructor(
-        startDate: Date,
-        endDate: Date,
-        symptoms: string[],
-        notes: string,
-        user: string,
-        flow: FlowStatus
+        startDate: string,
+        endDate: string,
+        cycleLength: number,
+        periodLength: number,
+        symptoms: {
+            date: string;
+            flow: 'light' | 'medium' | 'heavy';
+            symptoms: string[];
+            notes: string;
+        }[],
+        user: string
     ) {
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.symptoms = symptoms;
-        this.notes = notes;
-        this.user = user;
-        this.flow = flow;
+        {
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.cycleLength = cycleLength;
+            this.periodLength = periodLength;
+            this.symptoms = symptoms;
+            this.user = user;
+        }
     }
 }

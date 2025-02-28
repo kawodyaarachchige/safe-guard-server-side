@@ -2,11 +2,13 @@ import express, { Request, Response } from 'express';
 import dotenv from "dotenv"
 import cors from 'cors';
 import mongoose from "mongoose";
-import userRouter from "./routes/user-routes";
+import userRouter, {authenticateToken} from "./routes/user-routes";
 import incidentRouter from "./routes/incident-routes";
 import contactRouter from "./routes/contact-routes";
 import locationRouter from "./routes/location-routes";
-import cycleRoutes from "./routes/cycle-routes";
+import emergencyRouter from "./routes/emergency-routes";
+import cycleRouter from "./routes/cycle-routes";
+
 
 const app = express();
 const port = 5002;
@@ -26,10 +28,15 @@ mongoose
 
 
 app.use("/api/user",userRouter);
+
+app.use(authenticateToken);
+
 app.use("/api/incident",incidentRouter);
 app.use("/api/contact",contactRouter);
 app.use("/api/location",locationRouter);
-app.use("/api/cycle",cycleRoutes);
+app.use("/api/emergency",emergencyRouter);
+app.use("/api/cycle",cycleRouter);
+
 
 
 

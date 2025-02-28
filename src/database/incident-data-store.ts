@@ -2,6 +2,7 @@ import IIncident from "../models/IIncident";
 import {Incident} from "../models/Incident";
 import {addUserIncident} from "./user-data-store";
 
+
 export const saveIncident = async (incidentData: Incident) => {
     try {
 
@@ -20,6 +21,7 @@ export const saveIncident = async (incidentData: Incident) => {
 export const getIncidents = async (userId: string) => {
     try {
         const incidents = await IIncident.find({user: userId});
+        console.log(`Incidents for user ID ${userId}: ${JSON.stringify(incidents)}`);
         return incidents
     } catch (error) {
         console.log(`Error getting incidents: ${error}`);

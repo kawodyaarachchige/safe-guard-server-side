@@ -1,12 +1,14 @@
 import IUser from "../models/IUser";
 import {User} from "../models/User";
 
+
+
 export const registerUser = async (user: User) => {
     try {
         const fetchedUser = await IUser.findOne({email: user.email});
 
         if (!fetchedUser) {
-            const newUser = new User(user.email, user.name, user.password, user.incidents,user.contacts||[],user.location||null);
+            const newUser = new User(user.email, user.name, user.password, user.incidents,user.contacts,user.location);
             await IUser.create(newUser);
             return newUser;
 

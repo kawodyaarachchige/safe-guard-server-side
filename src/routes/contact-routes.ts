@@ -8,11 +8,11 @@ import {
     getAllContacts, getContactNumbers,
 
 } from "../database/contact-data-store";
-import IContact from "../models/IContact";
+
 
 const contactRouter = express.Router();
 
-// Middleware to validate contactId
+
 const validateContactId = (req: Request, res: Response, next: NextFunction): void => {
     const contactId = req.params.contactId;
 
@@ -21,10 +21,10 @@ const validateContactId = (req: Request, res: Response, next: NextFunction): voi
         return;
     }
 
-    next(); // Proceed to the next middleware/route handler
+    next();
 };
 
-// Save a new contact
+
 contactRouter.post("/save", async (req: Request, res: Response, next: NextFunction) => {
     try {
         console.log(`req.body: ${JSON.stringify(req.body)}`);
@@ -36,17 +36,17 @@ contactRouter.post("/save", async (req: Request, res: Response, next: NextFuncti
     }
 });
 
-// Get all contacts
+
 contactRouter.get("/all", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const contacts = await getAllContacts();
         res.status(200).json(contacts);
-    } catch (e) {
+    } catch (e){
+        /*console.log(`No contacts to show...`)*/
         next(e);
     }
 });
 
-// Get contacts for a specific user
 contactRouter.get("/user/:userId", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const userId = req.params.userId;
@@ -57,7 +57,6 @@ contactRouter.get("/user/:userId", async (req: Request, res: Response, next: Nex
     }
 });
 
-// Update a contact
 contactRouter.put("/update/:contactId", validateContactId, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const contactId = req.params.contactId;
@@ -68,8 +67,6 @@ contactRouter.put("/update/:contactId", validateContactId, async (req: Request, 
         next(e);
     }
 });
-
-// Delete a contact
 contactRouter.delete("/delete/:contactId", validateContactId, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const contactId = req.params.contactId;
@@ -79,9 +76,10 @@ contactRouter.delete("/delete/:contactId", validateContactId, async (req: Reques
         next(e);
     }
 });
-contactRouter.get("/getContactNumbers", async (req: Request, res: Response, next: NextFunction) => {
+contactRouter.get("/getContactNumbers/:userId", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const phoneNumbers = await getContactNumbers();
+        const userId = req.params.userId;
+        const phoneNumbers = await getContactNumbers(userId);
         res.status(200).json(phoneNumbers);
     } catch (e) {
         next(e);
