@@ -1,8 +1,15 @@
-# Women Safety Application - Backend
+<h1 align="center">
+    <img src="https://readme-typing-svg.herokuapp.com/?font=Righteous&size=35&center=true&vCenter=true&width=700&height=70&duration=4000&lines=Safe+Guard+Women+Safety+App;Built+with+React+and+Express.js&color=800080" />
+</h1>
 
 The Women Safety Application is a platform designed to enhance safety for women by providing real-time location tracking, emergency alerts, and community support. This repository contains the backend code for the application, built using **Express.js** and **Node.js**, with **MongoDB** as the database.
 
 ---
+
+![Women Safety](https://img.shields.io/badge/Women_Safety-React-blueviolet)
+![Express.js](https://img.shields.io/badge/Backend-Express.js-green)
+![MongoDB](https://img.shields.io/badge/Database-MongoDB-brightgreen)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 ## 🛠 Tech Stack
 
@@ -10,7 +17,6 @@ The Women Safety Application is a platform designed to enhance safety for women 
 - **Database**: MongoDB
 - **Authentication**: JWT (JSON Web Token)
 - **Geolocation**: Google Maps API / OpenStreetMap
-- **Notifications**: Twilio / Firebase
 - **Security**: bcrypt.js for password encryption, CORS for secure API requests
 
 ---
@@ -40,8 +46,12 @@ The Women Safety Application is a platform designed to enhance safety for women 
 - **CORS**: Enabled to secure API requests and prevent unauthorized access.
 
 ---
+## 🖥️ Frontend Repository
+
+The frontend code for the  System is available in a separate repository. You can find it [here](https://github.com/kawodyaarachchige/safe_guard.git)
+
+___
 
 ## 📞 Contact
 For any queries or contributions, contact:
 📧 **kawodya.wa@gmail.com**
-
